@@ -1,0 +1,25 @@
+# I use Traefik for Ingress/IngressRouting. But any ingress controller such as Nginx, HA Proxy, etc. will work.
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: homepage
+  namespace: default
+  annotations: 
+    kubernetes.io/ingress.class: traefik-external
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`www.yourdomain.com`)
+      kind: Rule
+      services:
+        - name: homepage
+          port: 80    
+    - match: Host(`yourdomain.com`)
+      kind: Rule
+      services:
+        - name: homepage
+          port: 80
+  tls:
+    secretName: yoursecret-tls
