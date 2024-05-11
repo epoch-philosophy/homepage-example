@@ -1,0 +1,60 @@
+---
+- Quick:
+    - YouTube:
+        icon: youtube.svg
+        href: https://youtube.com
+        description: Video Monopoly
+    - YouTubeDL:
+        icon: youtubedl.svg
+        href: "{{HOMEPAGE_VAR_YTDL_URL}}"
+        description: Downloader
+    - Proton Mail:
+        icon: proton-mail.svg
+        href: https://mail.proton.me
+        description: Encrypted Email
+    - Proton Drive:
+        icon: proton-drive.svg
+        href: https://drive.proton.me
+        description: Encrypted Cloud Storage
+        ping: https://drive.proton.me
+    - Simple Login:
+        icon: simplelogin.svg
+        href: https://app.simplelogin.io
+        description: Email Alias
+    - Mouse Sensitivity:
+        icon: logitech-gaming.svg
+        href: https://www.mouse-sensitivity.com
+        description: Sensitivity Conversion Tool
+    - Amazon:
+        icon: amazon.svg
+        href: https://www.amazon.com
+        description: Online Shopping Monopoly
+- Access:
+    - Homepage:
+        icon: homepage.png
+        href: https://gethomepage.dev/main/
+        description: Homepage Documentation
+    - Nextcloud:
+        icon: nextcloud.svg
+        href: "{{HOMEPAGE_VAR_NEXTCLOUD_URL}}"
+        description: Cloud and Collaboration Storage
+    - Patreon:
+        abbr: P
+        href: https://www.patreon.com/epochphilosophy
+        description: Funding
+    - ChatGPT:
+        icon: chatgpt.svg
+        href: https://chat.openai.com/
+        description: Chat Bot
+    - Artifact Hub:
+        icon: helm.svg
+        href: https://artifacthub.io
+        description: Helm Charts
+    - LXC Scripts:
+        icon: github.svg
+        href: https://helper-scripts.com/scripts
+        description: Proxmox VE Helper Scripts
+    - Dashboard Icons:
+        icon: github.svg
+        href: https://github.com/walkxcode/dashboard-icons
+        description: Icon Repository
