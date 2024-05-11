@@ -1,0 +1,440 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: homepage
+  namespace: default
+  labels:
+    app: homepage
+data:
+  kubernetes.yaml: |
+    mode: cluster
+  settings.yaml: |
+    title: Person's Homepage # Replaced by widget in this example.
+    headerStyle: clean
+    background:
+      image: https://wallpapercave.com/wp/wp4565843.jpg
+      blur: md # sm, md, xl... see https://tailwindcss.com/docs/backdrop-blur
+      saturate: 50 # 0, 50, 100... see https://tailwindcss.com/docs/backdrop-saturate
+      brightness: 50 # 0, 50, 75... see https://tailwindcss.com/docs/backdrop-brightness
+      opacity: 70 # 0-100
+    theme: dark
+    color: slate
+    useEqualHeights: true
+    quicklaunch:
+      searchDescriptions: true
+      hideInternetSearch: true
+      showSearchSuggestions: true
+      hideVisitURL: true
+    hideVersion: false  
+    layout:
+      Quick:
+        header: false
+        style: column
+      Access:
+        header: false
+        style: column
+      Calendar:
+        header: false
+        style: column   
+      Infrastructure:
+        header: true
+        style: row
+        columns: 4
+      Network and IoT:
+        header: true
+        style: row
+        columns: 4
+      Media:
+        header: true
+        style: row
+        columns: 4
+      Monitoring:
+        header: true
+        style: row 
+        columns: 4 
+      Tor Stack:
+        header: true
+        style: row 
+        columns: 4
+      Access and Services:
+        header: true
+        style: row
+        columns: 4   
+  custom.css: ""
+  custom.js: ""
+  bookmarks.yaml: |
+    - Quick:
+        - YouTube:
+            - icon: youtube.svg
+              href: https://youtube.com
+              description: Video Monopoly
+        - YouTubeDL:
+            - icon: youtubedl.svg
+              href: {{HOMEPAGE_VAR_YTDL_URL}}
+              description: Downloader
+        - Proton Mail:
+            - icon: proton-mail.svg
+              href: https://mail.proton.me
+              description: Encrypted Email
+        - Proton Drive:
+            - icon: proton-drive.svg
+              href: https://drive.proton.me
+              description: Encrypted Cloud Storage
+              ping: https://drive.proton.me
+        - Simple Login:
+            - icon: simplelogin.svg
+              href: https://app.simplelogin.io
+              description: Email Alias 
+        - Mouse Sensitivity:
+            - icon: logitech-gaming.svg
+              href: https://www.mouse-sensitivity.com
+              description: Sensitivity Conversion Tool
+        - Amazon:
+            - icon: amazon.svg
+              href: https://www.amazon.com
+              description: Online Shopping Monopoly            
+    - Access:
+        - Homepage:
+            - icon: homepage.png
+              href: https://gethomepage.dev/main/
+              description: Homepage Documentation                
+        - Nextcloud:
+            - icon: nextcloud.svg
+              href: {{HOMEPAGE_VAR_NEXTCLOUD_URL}} 
+              description: Cloud and Collaboration Storage
+        - Patreon:
+            - abbr: P
+              href: https://www.patreon.com/epochphilosophy
+              description: Funding    
+        - ChatGPT:
+            - icon: chatgpt.svg
+              href: https://chat.openai.com/
+              description: Chat Bot
+        - Artifact Hub: 
+            - icon: helm.svg 
+              href: https://artifacthub.io
+              description: Helm Charts
+        - LXC Scripts: 
+            - icon: github.svg 
+              href: https://helper-scripts.com/scripts
+              desctiption: Proxmox VE Helper Scripts
+        - Dashboard Icons:
+            - icon: github.svg
+              href: https://github.com/walkxcode/dashboard-icons
+              description: Icon Repository                                                                                   
+  services.yaml: |
+    - Calendar:
+        - Media Calendar:
+            widget:
+              type: calendar
+              firstDayInWeek: sunday
+              view: monthly
+              maxEvents: 10
+              showTime: true
+              timezone: America/Chicago
+              integrations:
+                - type: sonarr
+                  service_group: Tor Stack
+                  service_name: Sonarr
+                  color: teal
+                  params:
+                    unmonitored: true
+                - type: radarr
+                  service_group: Tor Stack 
+                  service_name: Radarr
+                  color: yellow
+                  params:
+                    unmonitored: true
+                - type: lidarr
+                  service_group: Tor Stack
+                  service_name: Lidarr
+                  color: green
+                  params:
+                    unmonitored: true
+                - type: readarr
+                  service_group: Tor Stack
+                  service_name: Readarr
+                  color: red
+                  params:
+                    unmonitored: true                
+    - Infrastructure:
+        - Proxmox:
+            icon: proxmox.svg
+            href: "{{HOMEPAGE_VAR_PROXMOX_URL1}}"
+            description: PVE1 
+            widget:
+                type: proxmox
+                url: "{{HOMEPAGE_VAR_PROXMOX_URL1}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: pve1
+        - Proxmox:
+            icon: proxmox.svg
+            href: "{{HOMEPAGE_VAR_PROXMOX_URL2}}"
+            description: PVE2 
+            widget:
+                type: proxmox
+                url: "{{HOMEPAGE_VAR_PROXMOX_URL}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: pve2
+        - Proxmox:
+            icon: proxmox.svg
+            href: "{{HOMEPAGE_VAR_PROXMOX_URL3}}"
+            description: PVE3
+            widget:
+                type: proxmox
+                url: "{{HOMEPAGE_VAR_PROXMOX_URL}}"
+                username: "{{HOMEPAGE_VAR_PROXMOX_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOX_API_KEY}}"
+                node: pve3
+        - Proxmox Backup:
+            icon: proxmox.svg
+            href: "https://192.168.0.115:8007/"
+            description: Proxmox Backup
+            widget:
+                type: proxmoxbackupserver
+                url: "https://192.168.0.115:8007/"
+                username: "{{HOMEPAGE_VAR_PROXMOXBACKUP_USER}}"
+                password: "{{HOMEPAGE_VAR_PROXMOXBACKUP_API_KEY}}"
+        - Portainer:
+            icon: portainer.svg
+            href: "{{HOMEPAGE_VAR_PORTAINER_URL}}"
+            description: Portainer K3S GUI
+        - Unraid NAS:
+            icon: unraid.svg
+            href: https://192-168-0-115.c9175cdd751e813093b647592c1feeda7bb97eca.myunraid.net/Dashboard
+            description: Media Server and NAS
+        - Longhorn:
+            icon: longhorn.svg
+            href: "{{HOMEPAGE_VAR_LONGHORN_URL}}"
+            description: K3S Storage
+        - Scrutiny:
+            icon: scrutiny.svg
+            href: "{{HOMEPAGE_VAR_SCRUTINY_URL}}"
+            description: Unraid Array Testing                           
+    - Network and IoT:
+        - Adguard Home 1:
+            icon: adguard-home.svg
+            href: "{{HOMEPAGE_VAR_ADGUARD1_URL}}"
+            description: DNS 1
+            widget:
+              type: adguard
+              url: http://10.43.88.55
+              username: "{{HOMEPAGE_VAR_ADGUARD1_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD1_PASSWORD}}"
+        - Adguard Home 2:
+            icon: adguard-home.svg
+            href: "{{HOMEPAGE_VAR_ADGUARD2_URL}}"
+            description: DNS 2
+            widget:
+              type: adguard
+              url: http://192.168.0.109
+              username: "{{HOMEPAGE_VAR_ADGUARD2_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_ADGUARD2_PASSWORD}}"             
+        - Traefik:
+            icon: traefik.svg
+            href: "{{HOMEPAGE_VAR_TRAEFIK_URL}}"
+            description: Reverse Proxy and Ingress
+            widget:
+              type: traefik
+              url: "{{HOMEPAGE_VAR_TRAEFIK_URL}}"                     
+        - Home Assistant:
+            icon: home-assistant.svg
+            href: "{{HOMEPAGE_VAR_HOME_ASSISTANT_URL}}"
+            description: Home Automation
+            widget:
+              type: homeassistant
+              url: http://192.168.0.115:8123
+              key: "{{HOMEPAGE_VAR_HOME_ASSISTANT_API_KEY}}"
+              custom: 
+                - state: sensor.thermostat_temperature
+                - state: lock.node_3
+                - state: sensor.node_3_battery_level
+        - Crowdsec:
+            icon: crowdsec.svg
+            href: https://app.crowdsec.net
+            description: Security
+        - Omada:
+            icon: omada.svg
+            href: https://192.168.0.100
+            description: Network Controller
+        - Frigate:
+            icon: frigate.svg
+            href: "{{HOMEPAGE_VAR_FRIGATE_URL}}"
+            description: NVR and ML Detection
+        - Cloudflare:
+            icon: cloudflare.svg
+            href: https://dash.cloudflare.com
+            description: Public DNS    
+    - Media:
+        - Jellyfin:
+            icon: jellyfin.svg
+            href: "{{HOMEPAGE_VAR_JELLYFIN_URL}}"
+            description: Media Player
+            widget:
+              type: jellyfin
+              url: http://192.168.0.115:8096
+              key: "{{HOMEPAGE_VAR_JELLYFIN_API_TOKEN}}"
+              enableBlocks: true
+              enableNowPlaying: true         
+        - Jellyseerr:
+            icon: jellyseerr.svg
+            href: "{{HOMEPAGE_VAR_JELLYSEERR_URL}}"
+            description: Media Requests
+            widget:
+              type: jellyseerr
+              url: http://192.168.0.115:5055
+              key: "{{HOMEPAGE_VAR_JELLYSEERR_API_TOKEN}}"        
+        - Navidrome:
+            icon: navidrome.svg
+            href: "{{HOMEPAGE_VAR_NAVIDROME_URL}}"
+            description: Self-hosted Music
+            widget:
+              type: navidrome
+              url: http://192.168.0.115:4533
+              user: ian
+              token: "{{HOMEPAGE_VAR_NAVIDROME_API_TOKEN}}"
+              salt: "{{HOMEPAGE_VAR_NAVIDROME_API_SALT}}"
+        - Immich:
+            icon: immich.svg
+            href: "{{HOMEPAGE_VAR_IMMICH_URL}}"
+            description: Photos              
+            widget:
+              type: immich
+              url: http://192.168.0.115:8760
+              key: "{{HOMEPAGE_VAR_IMMICH_API_TOKEN}}"
+    - Monitoring:
+        - Uptime Kuma:
+            icon: uptime-kuma.svg
+            href: "{{HOMEPAGE_VAR_UPTIME_KUMA_URL}}"
+            description: Status Monitor
+            widget:
+              type: uptimekuma
+              url: http://10.43.80.45:3001
+              slug: home        
+        - Speedtest Tracker:
+            icon: librespeed.svg
+            href: "{{HOMEPAGE_VAR_SPEEDTEST_URL}}"
+            description: Internet Speed Test
+            widget:
+              type: speedtest
+              url: http://10.43.1.73:80        
+        - Grafana:
+            icon: grafana.svg
+            href: "{{HOMEPAGE_VAR_GRAFANA_URL}}"
+            description: Prometheus Metrics
+            widget:
+              type: grafana
+              url: http://10.43.95.48:80
+              username: "{{HOMEPAGE_VAR_GRAFANA_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_GRAFANA_PASSWORD}}"
+        - EMQX Dashboard:
+            icon: emqx.svg
+            href: "{{HOMEPAGE_VAR_EMQX_URL}}"
+            description: MQTT Dashboard              
+
+    - Tor Stack: 
+        - qBittorrent:
+            icon: qbittorrent.svg
+            href: "{{HOMEPAGE_VAR_QBITTORRENT_URL}}"
+            description: Linux ISO Server
+            widget:
+              type: qbittorrent
+              url: http://192.168.0.115:8080
+              username: "{{HOMEPAGE_VAR_QBITTORRENT_USERNAME}}"
+              password: "{{HOMEPAGE_VAR_QBITTORRENT_PASSWORD}}"        
+        - Radarr:
+            icon: radarr.svg
+            href: "{{HOMEPAGE_VAR_RADARR_URL}}"
+            description: Movie Pull Automation
+            widget:
+              type: radarr
+              url: http://192.168.0.115:7878
+              key: {{HOMEPAGE_VAR_RADARR_API_KEY}}
+              enableQueue: false              
+        - Sonarr:
+            icon: sonarr.svg
+            href: "{{HOMEPAGE_VAR_SONARR_URL}}"
+            description: TV Pull Automation
+            widget:
+              type: sonarr
+              url: http://192.168.0.115:8989
+              key: "{{HOMEPAGE_VAR_SONARR_API_KEY}}"
+              enableQueue: false
+        - Lidarr:
+            icon: lidarr.svg
+            href: "{{HOMEPAGE_VAR_LIDARR_URL}}"
+            description: Music Pull Automation
+            widget:
+              type: lidarr
+              url: http://192.168.0.115:8686
+              key: "{{HOMEPAGE_VAR_LIDARR_API_KEY}}"
+              enableQueue: false        
+        - Readarr:
+            icon: readarr.svg
+            href: "{{HOMEPAGE_VAR_READARR_URL}}"
+            description: eBook Pull Automation
+            widget:
+              type: readarr
+              url: http://192.168.0.115:8787
+              key: "{{HOMEPAGE_VAR_READARR_API_KEY}}"
+              enableQueue: false        
+        - Bazarr:
+            icon: bazarr.svg
+            href: "{{HOMEPAGE_VAR_BAZARR_URL}}"
+            description: Subtitle Pull Automation
+            widget:
+              type: bazarr
+              url: http://192.168.0.115:6767
+              key: "{{HOMEPAGE_VAR_BAZARR_API_KEY}}"              
+        - Prowlarr:
+            icon: prowlarr.svg
+            href: "{{HOMEPAGE_VAR_PROWLARR_URL}}"
+            description: Index Pull Automation
+            widget:
+              type: prowlarr
+              url: http://192.168.0.115:9696
+              key: "{{HOMEPAGE_VAR_PROWLARR_API_KEY}}"
+              enableQueue: false      
+
+    - Access and Services:
+        - Vaultwarden:
+            icon: bitwarden.svg
+            href: "{{HOMEPAGE_VAR_VAULTWARDEN_URL}}"
+            description: Self-hosted Bitwarden Admin Interface        
+        - IPMI:
+            icon: https://upload.wikimedia.org/wikipedia/commons/1/1d/Super_Micro_Computer_Logo.svg
+            href: "{{HOMEPAGE_VAR_IPMI_URL}}"
+            description: Unraid IPMI
+            siteMonitor: https://192.168.0.40          
+        - Netboot:
+            icon: https://netboot.xyz/img/nbxyz-laptop.gif
+            href: "{{HOMEPAGE_VAR_NETBOOT_URL}}"
+            description: Network Boot
+  widgets.yaml: |
+    - openmeteo:
+        label: Your City
+        lattitude: 00.123
+        longitude: 00.123
+        timezone: TZ # America/Chicago, UTC, etc.
+        units: imperial
+        cache: 5 
+    - kubernetes:
+        cluster:
+          show: true
+          cpu: true
+          memory: true
+          showLabel: true
+          label: "K3S Cluster"
+        nodes:
+          show: false
+          cpu: true
+          memory: true
+          showLabel: true     
+    - search:
+        provider: duckduckgo
+        target: _blank
+        focus: true
+        showSearchSuggestions: true          
+  docker.yaml: ""
