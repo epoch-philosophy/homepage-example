@@ -172,6 +172,7 @@
           user: ian
           token: "{{HOMEPAGE_VAR_NAVIDROME_API_TOKEN}}"
           salt: "{{HOMEPAGE_VAR_NAVIDROME_API_SALT}}"
+          # Navidrome's (Subsonic) API requires a much more in-depth configuration: https://www.subsonic.org/pages/api.jsp
     - Immich:
         icon: immich.svg
         href: "{{HOMEPAGE_VAR_IMMICH_URL}}"
