@@ -1,4 +1,4 @@
-**Homepage Configuration/Kubernetes Deployment**
+**Homepage Configuration With Docker and Kubernetes Deployment Files**
 
 A full run-down of my Homepage dashboard configuration as well as my specific Kubernetes deployment of it.
 When using Kubernetes I combined all of Homepage's YAML configuration files into a ConfigMap.
